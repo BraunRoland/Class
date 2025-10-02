@@ -22,7 +22,7 @@ namespace _10._01
 
 		private void Beolvas(string fajlnev)
 		{
-			StreamReader sr = new StreamReader(fajlnev);
+			StreamReader sr = new StreamReader(fajlnev,Encoding.Default,true);
 			sr.ReadLine();
 			while (!sr.EndOfStream)
 			{
