@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -11,7 +12,6 @@ namespace _10._01
 	internal class Feladatok
 	{
 		private List<Merkozes> lista;
-		private string kiiras = "";
 
 		public Feladatok()
 		{
@@ -37,10 +37,11 @@ namespace _10._01
 
 		public string F3()
 		{
-			int hazaiSz = 0;
+			string s = "";
+            int hazaiSz = 0;
 			int vendegSz = 0;
 
-			kiiras += $"3. feladat: Real Madrid mérkőzései:\n";
+			s += $"3. feladat: Real Madrid mérkőzései:\n";
 			foreach (Merkozes item in lista)
 			{
 				if (item.Hazai.Nev.Equals("Real Madrid"))
@@ -52,9 +53,10 @@ namespace _10._01
 					vendegSz++;
 				}
 			}
-			kiiras += $"\tHazai: {hazaiSz}\n\tVendég: {vendegSz}\n";
-			return kiiras;
-		}
+			s += $"\tHazai: {hazaiSz}\n\tVendég: {vendegSz}\n";
+			Trace.WriteLine(s);
+			return s;
+        }
 
 		public string F4()
 		{
@@ -108,24 +110,29 @@ namespace _10._01
 		public string F7()
 		{
 			string s = "7. feladat: ";
-			foreach ( Merkozes item in lista)
+			List<string> helyszinek = new List<string>();
+            foreach (Merkozes item in lista)
 			{
-				int merkozesSzam = 0;
-				Console.WriteLine(item.Helyszin);
-				for ( int i = 0; i < lista.Count; i++)
+				helyszinek.Add(item.Helyszin);
+            }
+			helyszinek = helyszinek.Distinct().ToList();
+			foreach(string item in helyszinek)
+            {
+				int merkozesekSzama = 0;
+				foreach (Merkozes m in lista)
+                {
+                    if (m.Helyszin.Equals(item))
+                    {
+                        merkozesekSzama++;
+                    }
+                }
+				if (merkozesekSzama > 20)
 				{
-					Console.WriteLine(lista[i].Helyszin);
-					if (item.Helyszin == lista[i].Helyszin)
-					{
-						merkozesSzam++;
-					}
+					s += $"\n\t{item}: {merkozesekSzama}";
+					Trace.WriteLine($"{item}: {merkozesekSzama}");
 				}
-				if ( merkozesSzam > 20)
-				{
-				s += $"\n\t{item.Helyszin}: {merkozesSzam}";
-				}
-			}
-			return s;
+            }
+            return s;
 		}
 	}
 }

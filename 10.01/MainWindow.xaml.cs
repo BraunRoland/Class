@@ -8,6 +8,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using System.Diagnostics;
 
 namespace _10._01
 {
@@ -19,12 +20,14 @@ namespace _10._01
         Feladatok f;
         List<Merkozes> lista;
         List<string> szoveg = new List<string>();
-		public MainWindow()
+		List<int> feladatSzamok = new List<int>();
+        public MainWindow()
         {
             InitializeComponent();
             f = new Feladatok();
             lista = f.Lista;
-		}
+			feladatSzamok.Clear();
+        }
 
 		private void Button_Click(object sender, RoutedEventArgs e)
 		{
@@ -34,43 +37,47 @@ namespace _10._01
 		private void harmadik_Click(object sender, RoutedEventArgs e)
 		{           
             //MessageBox.Show(this,f.F3(),"Harmadik feladat",MessageBoxButton.OK,MessageBoxImage.Information);
-            kiiras(f.F3());
-		}
+			feladatSzamok.Add(3);
+            kiiras(f.F3(),3);
+        }
 
-        private void kiiras(string adat)
+        private void kiiras(string adat, int feladatSzam)
         {
-            lb_szoveg.ItemsSource = null;
-			if (szoveg.Contains(adat) == false)
-            {
-                szoveg.Add(adat);
-				lb_szoveg.ItemsSource = szoveg;
-			}
-		}
+			szoveg.Add(adat);
+            szoveg = szoveg.Distinct().ToList();
+            lb_szoveg.ItemsSource = szoveg;
+            lb_szoveg.Items.Refresh();
+        }
 
 		private void negyedik_Click(object sender, RoutedEventArgs e)
 		{
-            kiiras(f.F4());
-		}
+            kiiras(f.F4(),4);
+			feladatSzamok.Add(4);
+        }
 
 		private void otodik_Click(object sender, RoutedEventArgs e)
 		{
-            kiiras(f.F5());
-		}
+            kiiras(f.F5(),5);
+			feladatSzamok.Add(5);
+        }
 
 		private void btn_torles_Click(object sender, RoutedEventArgs e)
 		{
 			szoveg.Clear();
 			lb_szoveg.ItemsSource = szoveg;
-		}
+			lb_szoveg.Items.Refresh();
+        }
 
 		private void hatodik_Click(object sender, RoutedEventArgs e)
 		{
-			kiiras(f.F6());
-		}
+			kiiras(f.F6(),6);
+			feladatSzamok.Add(6);
+        }
 
 		private void hetedik_Click(object sender, RoutedEventArgs e)
 		{
-			kiiras(f.F7());
-		}
+			kiiras(f.F7(),7);
+			feladatSzamok.Add(7);
+        }
 	}
 }
